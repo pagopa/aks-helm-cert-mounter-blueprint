@@ -7,9 +7,7 @@ nameOverride: ""
 # -- Helm chart fullname override
 fullnameOverride: ""
 
-# -- This section allow to configure canary deployment
-# @default -- -
-canaryDelivery:
+
   # -- (bool) Beta/Enable Canary/BlueGreen Deployment
   create: false
   # -- This section allow to configure ingress inside canary deployment
@@ -151,21 +149,6 @@ affinity: {}
 #
 # Network
 #
-
-# -- Ingress configuration
-# @default -- -
-ingress:
-  # -- (bool) Create or not the ingress manifest
-  create: false
-  # -- Hostname for the ingress like https://idpay.pagopa.it
-  host: ""
-  # -- Path where the application can response like: `/app`
-  path: "/"
-  pathType: ImplementationSpecific
-  # -- (bool) if force ssl redirect is enabled
-  forceSslRedirect: true
-  # -- the rewrite target for ingress
-  rewriteTarget: /$1
 
 service:
   # -- (bool) create the service manifest

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: microservice-chart
-description: A Helm chart for PagoPA microservice
+name: cert-mounter
+description: A Helm chart for PagoPA cert mounter for ingress 
 type: application
-version: 1.21.0
+version: 1.0.0
 appVersion: "0.0.0"
