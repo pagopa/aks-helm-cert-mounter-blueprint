@@ -1,6 +1,6 @@
 dependencies:
-- name: microservice-chart
-  repository: file://../../../charts/microservice-chart
+- name: crt-mounter-blueprint
+  repository: file://../../../charts/crt-mounter-blueprint
   version: 1.20.0
 digest: sha256:02b94d826c2d18fc5c5a9ccd2ca9d70a159d0edf949095b959584e53118ae08d
 generated: "2022-07-13T18:32:09.359354+02:00"

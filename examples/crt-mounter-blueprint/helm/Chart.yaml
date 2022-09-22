@@ -1,0 +1,10 @@
+apiVersion: v2
+name: crt-mounter-blueprint
+description: An example application with Java spring boot
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+dependencies:
+- name: cert-mounter-blueprint
+  version: 1.0.0
+  repository: file://../../../charts/crt-mounter-blueprint
