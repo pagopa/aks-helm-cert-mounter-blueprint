@@ -4,30 +4,30 @@ Here you can find an example of the template result
 
 ```yaml
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/configmap.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
   namespace: idpay
   labels:
-    helm.sh/chart: microservice-chart-1.17.0
-    app.kubernetes.io/name: microservice-chart
+    helm.sh/chart: crt-mounter-blueprint-1.17.0
+    app.kubernetes.io/name: crt-mounter-blueprint
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/version: "0.0.0"
     app.kubernetes.io/managed-by: Helm
 data:
   APP: foo
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/service.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
   namespace: idpay
   labels:
-    helm.sh/chart: microservice-chart-1.17.0
-    app.kubernetes.io/name: microservice-chart
+    helm.sh/chart: crt-mounter-blueprint-1.17.0
+    app.kubernetes.io/name: crt-mounter-blueprint
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/version: "0.0.0"
     app.kubernetes.io/managed-by: Helm
@@ -39,18 +39,18 @@ spec:
       protocol: TCP
       name: app-port-8080-svc
   selector:
-    app.kubernetes.io/name: microservice-chart
+    app.kubernetes.io/name: crt-mounter-blueprint
     app.kubernetes.io/instance: release-name
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/deployment.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
   namespace: idpay
   labels:
-    helm.sh/chart: microservice-chart-1.17.0
-    app.kubernetes.io/name: microservice-chart
+    helm.sh/chart: crt-mounter-blueprint-1.17.0
+    app.kubernetes.io/name: crt-mounter-blueprint
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/version: "0.0.0"
     app.kubernetes.io/managed-by: Helm
@@ -59,13 +59,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: microservice-chart
+      app.kubernetes.io/name: crt-mounter-blueprint
       app.kubernetes.io/instance: release-name
   template:
     metadata:
       labels:
         aadpodidbinding: "idpay-pod-identity"
-        app.kubernetes.io/name: microservice-chart
+        app.kubernetes.io/name: crt-mounter-blueprint
         app.kubernetes.io/instance: release-name
     spec:
       automountServiceAccountToken: false
@@ -74,7 +74,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: microservice-chart
+        - name: crt-mounter-blueprint
           securityContext:
             allowPrivilegeEscalation: false
           image: "ghcr.io/pagopa/devops-java-springboot-color:0.6.0"
@@ -112,12 +112,12 @@ spec:
             - name: aks-api-url
               valueFrom:
                 secretKeyRef:
-                  name: release-name-microservice-chart
+                  name: release-name-crt-mounter-blueprint
                   key: cstar-d-weu-dev01-aks-apiserver-url
             - name: APP
               valueFrom:
                 configMapKeyRef:
-                  name: release-name-microservice-chart
+                  name: release-name-crt-mounter-blueprint
                   key: APP
         - name: crt-mounter
           securityContext:
@@ -141,20 +141,20 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-microservice-chart
+              secretProviderClass: release-name-crt-mounter-blueprint
         ### ingress tls cert
         - name: secrets-store-inline-crt
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: dev01-idpay-internal-dev-cstar-pagopa-it-release-name-microservice-chart
+              secretProviderClass: dev01-idpay-internal-dev-cstar-pagopa-it-release-name-crt-mounter-blueprint
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/ingress.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
   namespace: idpay
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -168,7 +168,7 @@ spec:
         paths:
           - backend:
               service:
-                name: release-name-microservice-chart
+                name: release-name-crt-mounter-blueprint
                 port:
                   number: 8080
             path: /idpay/testbar/(.*)
@@ -177,11 +177,11 @@ spec:
     - hosts: [dev01.idpay.internal.dev.cstar.pagopa.it]
       secretName: dev01-idpay-internal-dev-cstar-pagopa-it
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/secretproviderclass-ingress-tls.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/secretproviderclass-ingress-tls.yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: dev01-idpay-internal-dev-cstar-pagopa-it-release-name-microservice-chart
+  name: dev01-idpay-internal-dev-cstar-pagopa-it-release-name-crt-mounter-blueprint
   namespace: idpay
 spec:
   provider: azure
@@ -207,22 +207,22 @@ spec:
           objectType: secret
           objectVersion: ""
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/secretproviderclass-kv.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/secretproviderclass-kv.yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1
 
 kind: SecretProviderClass
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
   labels:
-    helm.sh/chart: microservice-chart-1.17.0
-    app.kubernetes.io/name: microservice-chart
+    helm.sh/chart: crt-mounter-blueprint-1.17.0
+    app.kubernetes.io/name: crt-mounter-blueprint
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/version: "0.0.0"
     app.kubernetes.io/managed-by: Helm
 spec:
   provider: azure
   secretObjects:
-    - secretName: release-name-microservice-chart
+    - secretName: release-name-crt-mounter-blueprint
       type: Opaque
       data:
       - key: cstar-d-weu-dev01-aks-apiserver-url
@@ -242,30 +242,30 @@ spec:
           objectVersion: ""
 ---
 
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/autoscaling.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/autoscaling.yaml
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
 spec:
   podIdentity:
     provider: azure
 
 ---
-# Source: devops-java-springboot-color-bar/charts/microservice-chart/templates/autoscaling.yaml
+# Source: devops-java-springboot-color-bar/charts/crt-mounter-blueprint/templates/autoscaling.yaml
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: release-name-microservice-chart
+  name: release-name-crt-mounter-blueprint
   labels:
-   helm.sh/chart: microservice-chart-1.17.0
-   app.kubernetes.io/name: microservice-chart
+   helm.sh/chart: crt-mounter-blueprint-1.17.0
+   app.kubernetes.io/name: crt-mounter-blueprint
    app.kubernetes.io/instance: release-name
    app.kubernetes.io/version: "0.0.0"
    app.kubernetes.io/managed-by: Helm
 spec:
   scaleTargetRef:
-    name: release-name-microservice-chart
+    name: release-name-crt-mounter-blueprint
   minReplicaCount: 1
   maxReplicaCount: 2
   pollingInterval: 30
@@ -273,7 +273,7 @@ spec:
   triggers:
     - type: azure-monitor
       authenticationRef:
-        name: release-name-microservice-chart
+        name: release-name-crt-mounter-blueprint
       metadata:
         metricAggregationType: Count
         metricName: ServiceApiHit

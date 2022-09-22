@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "microservice-chart.fullname" . }}
+  name: {{ include "crt-mounter-blueprint.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "microservice-chart.labels" . | nindent 4 }}
+    {{- include "crt-mounter-blueprint.labels" . | nindent 4 }}
   annotations:
     reloader.stakater.com/auto: "true"
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
-      {{- include "microservice-chart.selectorLabels" . | nindent 6 }}
+      {{- include "crt-mounter-blueprint.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,10 +21,10 @@ spec:
       {{- end }}
       labels:
         aadpodidbinding: "{{ .Values.namespace }}-pod-identity"
-        {{- include "microservice-chart.selectorLabels" . | nindent 8 }}
+        {{- include "crt-mounter-blueprint.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
-      serviceAccountName: {{ include "microservice-chart.serviceAccountName" . }}
+      serviceAccountName: {{ include "crt-mounter-blueprint.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -55,7 +55,7 @@ spec:
             - name: {{ $name }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "microservice-chart.fullname" $ }}
+                  name: {{ include "crt-mounter-blueprint.fullname" $ }}
                   key: {{ $value }}
             {{- end }}
             #configmap
@@ -63,7 +63,7 @@ spec:
             - name: {{ $key }}
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "microservice-chart.fullname" $ }}
+                  name: {{ include "crt-mounter-blueprint.fullname" $ }}
                   key: {{ $key }}
             {{- end }}
             #external configmap values
@@ -101,7 +101,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: {{ include "microservice-chart.fullname" $ }}
+              secretProviderClass: {{ include "crt-mounter-blueprint.fullname" $ }}
         {{- end }}
         {{- if .Values.ingress.create }}
         ### ingress tls cert
@@ -110,7 +110,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: {{ .Values.ingress.host | replace "." "-" }}-{{ include "microservice-chart.fullname" . }}
+              secretProviderClass: {{ .Values.ingress.host | replace "." "-" }}-{{ include "crt-mounter-blueprint.fullname" . }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

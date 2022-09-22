@@ -27,7 +27,7 @@ jobs:
       # issue: https://github.com/helm/chart-releaser-action/issues/113
       - name: Force tags download
         run: |
-          git pull --tags   
+          git pull --tags
 
       - name: Configure Git
         run: |
@@ -49,8 +49,8 @@ jobs:
       - name: Bump new version
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          yq -i ".version = \"${{ steps.semantic.outputs.new_release_version }}\"" "charts/microservice-chart/Chart.yaml"
-          git add "charts/microservice-chart/Chart.yaml"
+          yq -i ".version = \"${{ steps.semantic.outputs.new_release_version }}\"" "charts/crt-mounter-blueprint/Chart.yaml"
+          git add "charts/crt-mounter-blueprint/Chart.yaml"
           git commit -m "Bumb microservice chart version ${{ steps.semantic.outputs.new_release_version }}"
           git push -u origin main
 

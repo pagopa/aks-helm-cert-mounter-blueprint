@@ -2,7 +2,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: {{ include "microservice-chart.fullname" . }}
+  name: {{ include "crt-mounter-blueprint.fullname" . }}
 spec:
   podIdentity:
     provider: azure
@@ -10,14 +10,14 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: {{ include "microservice-chart.fullname" . }}
+  name: {{ include "crt-mounter-blueprint.fullname" . }}
   labels:
-    {{- include "microservice-chart.labels" . | nindent 3 }}
+    {{- include "crt-mounter-blueprint.labels" . | nindent 3 }}
   annotations:
     helm.sh/hook: post-install,post-upgrade # fix updates on ScaledObject resource
 spec:
   scaleTargetRef:
-    name: {{ include "microservice-chart.fullname" . }}
+    name: {{ include "crt-mounter-blueprint.fullname" . }}
   minReplicaCount: {{ .Values.autoscaling.minReplica }}
   maxReplicaCount: {{ .Values.autoscaling.maxReplica }}
   pollingInterval: {{ .Values.autoscaling.pollingInterval }}
@@ -26,7 +26,7 @@ spec:
     {{- range .Values.autoscaling.triggers }}
     - type: {{ .type }}
       authenticationRef:
-        name: {{ include "microservice-chart.fullname" $ }}
+        name: {{ include "crt-mounter-blueprint.fullname" $ }}
       metadata:
         {{- .metadata | toYaml | nindent 8 }}
     {{- end }}
