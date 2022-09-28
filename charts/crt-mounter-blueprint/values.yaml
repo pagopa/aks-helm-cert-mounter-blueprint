@@ -7,52 +7,6 @@ nameOverride: ""
 # -- Helm chart fullname override
 fullnameOverride: ""
 
-
-  # -- (bool) Beta/Enable Canary/BlueGreen Deployment
-  create: false
-  # -- This section allow to configure ingress inside canary deployment
-  # @default -- -
-  ingress:
-    # -- (bool) Beta/Enable Ingress for Canary/BlueGreen Deployment
-    create: true
-    #     # canary:
-    #     #   type: bluegreen
-    # -- Configure how ingress canary should be
-    # @default -- -
-    canary:
-      # -- The type of canary can be header|bluegreen
-      type: header
-      # -- the header name used to call the canary deployment
-      headerName: canary
-      # -- the header values used to call the canary deployment
-      headerValue: pagopa
-      # -- the weight percent used into canary deployment. Can be used toghether with header
-      weightPercent: 10
-  service:
-    # -- (bool) Beta/Enable Service for Canary/BlueGreen Deployment
-    create: true
-  # -- Beta/Deployment
-  # @default -- -
-  deployment:
-    # -- (bool) Beta/Enable Deployment for Canary/BlueGreen Deployment
-    create: true
-    image:
-      # -- Docker reposity for the container canary
-      repository: ghcr.io/pagopa/devops-java-springboot-color
-      # -- Container TAG
-      tag: 0.7.1
-      # -- Pull policy to use
-      pullPolicy: Always
-    # -- Environment config to use for the canary container
-    envConfig: {}
-    # -- Environment secrets to use for the canary container
-    envSecret: {}
-  # -- Beta/SecretProviderClass
-  # @default -- -
-  secretProviderClass:
-    # -- (bool) Beta/create or not the secret provider class manifest
-    create: true
-
 #
 # Deployment
 #
@@ -149,6 +103,20 @@ affinity: {}
 #
 # Network
 #
+# -- Ingress configuration
+# @default -- -
+ingress:
+  # -- (bool) Create or not the ingress manifest
+  create: true
+  # -- Hostname for the ingress like https://idpay.pagopa.it
+  host: ""
+  # -- Path where the application can response like: `/app`
+  path: "/"
+  pathType: ImplementationSpecific
+  # -- (bool) if force ssl redirect is enabled
+  forceSslRedirect: true
+  # -- the rewrite target for ingress
+  rewriteTarget: /$1
 
 service:
   # -- (bool) create the service manifest
@@ -194,6 +162,11 @@ keyvault:
   name: ""
   # -- Tenant id (uuid)
   tenantId: ""
+
+kvCertificatesName:
+  - mock-certificate
+  - fake-cert
+
 
 serviceAccount:
   create: false

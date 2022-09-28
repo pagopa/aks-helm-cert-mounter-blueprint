@@ -1,3 +1,4 @@
+{{- $fullName  := include "crt-mounter-blueprint.fullname" .  -}}
 {{- if .Values.deployment.create -}}
 apiVersion: apps/v1
 kind: Deployment
@@ -37,10 +38,12 @@ spec:
             - name: app-port-{{ .Values.service.port }}
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+{{- /*
           livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 12 }}
           readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 12 }}
+*/}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if .Values.envSecret }}
@@ -76,7 +79,6 @@ spec:
                   key: {{ $internVal }}
             {{- end }}
             {{- end }}
-        {{- if .Values.ingress.create }}
         - name: crt-mounter
           securityContext:
             allowPrivilegeEscalation: false
@@ -87,13 +89,11 @@ spec:
               memory: 16Mi
               cpu: 50m
           volumeMounts:
-            - name: secrets-store-inline-crt
-              mountPath: "/mnt/secrets-store-crt"
+            {{- range $kvCert := .Values.kvCertificatesName }}
+            - name: secrets-store-inline-crt-{{ $kvCert }}
+              mountPath: "/mnt/secrets-store-crt-{{ $kvCert }}"
               readOnly: true
-        {{- end }}
-        {{- with .Values.sidecars }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+            {{- end }}
       volumes:
         {{- if .Values.envSecret }}
         - name: secrets-store-inline
@@ -103,14 +103,14 @@ spec:
             volumeAttributes:
               secretProviderClass: {{ include "crt-mounter-blueprint.fullname" $ }}
         {{- end }}
-        {{- if .Values.ingress.create }}
-        ### ingress tls cert
-        - name: secrets-store-inline-crt
+        ### TLS cert
+        {{- range $kvCert := .Values.kvCertificatesName }}
+        - name: secrets-store-inline-crt-{{ $kvCert }}
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: {{ .Values.ingress.host | replace "." "-" }}-{{ include "crt-mounter-blueprint.fullname" . }}
+              secretProviderClass: {{ $fullName }}-{{ $kvCert }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

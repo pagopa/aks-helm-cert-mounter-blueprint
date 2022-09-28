@@ -42,7 +42,7 @@ mkdir helm && cd helm
 Add Helm repo:
 
 ```shell
-helm repo add pagopa-microservice https://pagopa.github.io/aks-helm-cert-mounter-blueprint
+helm repo add cert-mounter-blueprint https://pagopa.github.io/aks-helm-cert-mounter-blueprint
 ```
 
 > If you had already added this repo earlier, run `helm repo update` to retrieve
