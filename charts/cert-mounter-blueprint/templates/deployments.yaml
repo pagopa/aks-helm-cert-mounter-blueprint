@@ -1,19 +1,19 @@
-{{- $fullName  := include "crt-mounter-blueprint.fullname" .  -}}
+{{- $fullName  := include "cert-mounter-blueprint.fullname" .  -}}
 {{- if .Values.deployment.create -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "crt-mounter-blueprint.fullname" . }}
+  name: {{ include "cert-mounter-blueprint.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "crt-mounter-blueprint.labels" . | nindent 4 }}
+    {{- include "cert-mounter-blueprint.labels" . | nindent 4 }}
   annotations:
     reloader.stakater.com/auto: "true"
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
-      {{- include "crt-mounter-blueprint.selectorLabels" . | nindent 6 }}
+      {{- include "cert-mounter-blueprint.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -22,10 +22,10 @@ spec:
       {{- end }}
       labels:
         aadpodidbinding: "{{ .Values.namespace }}-pod-identity"
-        {{- include "crt-mounter-blueprint.selectorLabels" . | nindent 8 }}
+        {{- include "cert-mounter-blueprint.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
-      serviceAccountName: {{ include "crt-mounter-blueprint.serviceAccountName" . }}
+      serviceAccountName: {{ include "cert-mounter-blueprint.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

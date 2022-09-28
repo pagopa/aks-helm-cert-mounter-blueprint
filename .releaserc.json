@@ -1,7 +1,7 @@
 {
   "branches": ["main", "master"],
   "ci": false,
-  "tagFormat": "crt-mounter-blueprint-${version}",
+  "tagFormat": "cert-mounter-blueprint-${version}",
   "plugins": [
     [
       "@semantic-release/commit-analyzer",

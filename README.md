@@ -59,7 +59,7 @@ type: application
 version: 1.0.0
 appVersion: 1.0.0
 dependencies:
-- name: crt-mounter-blueprint
+- name: cert-mounter-blueprint
   version: 1.19.0
   repository: "https://pagopa.github.io/aks-helm-cert-mounter-blueprint"
 EOF
@@ -156,7 +156,7 @@ look at this [GitHub Action](.github/workflows/check_helm.yml).
 
 ## Yaml chart configuration properties (values.yaml)
 
-see [README/Microservice Chart configuration](charts/crt-mounter-blueprint/README.md) to understand how to use the values.
+see [README/Microservice Chart configuration](charts/cert-mounter-blueprint/README.md) to understand how to use the values.
 
 ### Yaml: how to load values from externals config maps and use as ENV variable
 

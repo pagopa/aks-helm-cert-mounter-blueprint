@@ -5,7 +5,7 @@ repos:
       - id: helm-docs
         args:
           # Make the tool search for charts only under the `example-charts` directory
-          - --chart-search-root=charts/crt-mounter-blueprint
+          - --chart-search-root=charts/cert-mounter-blueprint
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.17 # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
     hooks:

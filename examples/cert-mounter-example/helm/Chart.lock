@@ -1,0 +1,6 @@
+dependencies:
+- name: cert-mounter-blueprint
+  repository: file://../../../charts/cert-mounter-blueprint
+  version: 1.0.0
+digest: sha256:dea7851d72d404945349e8ba2795cb698602b83625c2357ae6e67acfcd814277
+generated: "2022-09-28T22:15:09.960449+02:00"
