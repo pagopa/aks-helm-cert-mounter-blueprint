@@ -49,8 +49,8 @@ jobs:
       - name: Bump new version
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          yq -i ".version = \"${{ steps.semantic.outputs.new_release_version }}\"" "charts/crt-mounter-blueprint/Chart.yaml"
-          git add "charts/crt-mounter-blueprint/Chart.yaml"
+          yq -i ".version = \"${{ steps.semantic.outputs.new_release_version }}\"" "charts/cert-mounter-blueprint/Chart.yaml"
+          git add "charts/cert-mounter-blueprint/Chart.yaml"
           git commit -m "Bumb microservice chart version ${{ steps.semantic.outputs.new_release_version }}"
           git push -u origin main
 
