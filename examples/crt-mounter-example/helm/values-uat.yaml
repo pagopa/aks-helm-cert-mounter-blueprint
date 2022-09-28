@@ -1,4 +1,4 @@
-crt-mounter-blueprint:
+cert-mounter-blueprint:
   namespace: "idpay"
   nameOverride: ""
   fullnameOverride: ""
