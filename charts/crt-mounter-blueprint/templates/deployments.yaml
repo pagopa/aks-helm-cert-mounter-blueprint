@@ -29,56 +29,6 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: app-port-{{ .Values.service.port }}
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-{{- /*
-          livenessProbe:
-{{ toYaml .Values.livenessProbe | indent 12 }}
-          readinessProbe:
-{{ toYaml .Values.readinessProbe | indent 12 }}
-*/}}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.envSecret }}
-          volumeMounts:
-            - name: secrets-store-inline
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
-          {{- end }}
-          env:
-            #secrets
-            {{- range $name, $value := .Values.envSecret }}
-            - name: {{ $name }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "crt-mounter-blueprint.fullname" $ }}
-                  key: {{ $value }}
-            {{- end }}
-            #configmap
-            {{- range $key, $val := .Values.envConfig }}
-            - name: {{ $key }}
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "crt-mounter-blueprint.fullname" $ }}
-                  key: {{ $key }}
-            {{- end }}
-            #external configmap values
-            {{- range $key, $valMap := .Values.envConfigMapExternals }}
-            {{- range $internKey, $internVal := $valMap }}
-            - name: {{ $internKey }}
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ $key }}
-                  key: {{ $internVal }}
-            {{- end }}
-            {{- end }}
         - name: crt-mounter
           securityContext:
             allowPrivilegeEscalation: false
@@ -95,14 +45,7 @@ spec:
               readOnly: true
             {{- end }}
       volumes:
-        {{- if .Values.envSecret }}
-        - name: secrets-store-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: {{ include "crt-mounter-blueprint.fullname" $ }}
-        {{- end }}
+
         ### TLS cert
         {{- range $kvCert := .Values.kvCertificatesName }}
         - name: secrets-store-inline-crt-{{ $kvCert }}
