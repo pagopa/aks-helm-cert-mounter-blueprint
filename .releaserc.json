@@ -1,7 +1,7 @@
 {
   "branches": ["main", "master"],
   "ci": false,
-  "tagFormat": "microservice-chart-${version}",
+  "tagFormat": "crt-mounter-blueprint-${version}",
   "plugins": [
     [
       "@semantic-release/commit-analyzer",

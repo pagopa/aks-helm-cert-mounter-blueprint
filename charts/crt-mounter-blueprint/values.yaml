@@ -1,0 +1,100 @@
+# -- Namespace in which deploy the microservice
+namespace: ""
+
+# -- Helm chart name override
+nameOverride: ""
+
+# -- Helm chart fullname override
+fullnameOverride: ""
+
+#
+# Deployment
+#
+
+# -- Configure deployment
+# @default -- -
+deployment:
+  # -- (bool) create the deployment manifest
+  create: true
+  # -- (int) Number of replicas for this deployment
+  replicas: 1
+
+# -- Configure values from config maps external to chart. E.g already present into cluster, see documentation
+# @default -- {}
+envConfigMapExternals: {}
+
+# -- POD resources section
+# @default -- -
+resources:
+  # -- request is mandatory
+  requests:
+    memory: "96Mi"
+    cpu: "40m"
+  # -- limits is mandatory
+  limits:
+    memory: "128Mi"
+    cpu: "150m"
+
+# -- Environment config to use for the canary container
+envConfig: {}
+
+# -- Environment secrets to use for the canary container
+envSecret: {}
+
+podAnnotations: {}
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+
+# -- K8s node selectors
+nodeSelector: {}
+
+# -- Pod taints toleration
+tolerations: []
+
+# -- Pod labels affinity
+affinity: {}
+
+#
+# Network
+#
+service:
+  # -- (bool) create the service manifest
+  create: true
+  # -- Which type of service to use
+  type: ClusterIP
+  # -- (int) Which port use (! this port is used even inside the deployment)
+  port: 80
+
+
+#
+# Pod identity and KV connection
+#
+
+# -- Secrect provider class allow to connect to azure kv
+# @default -- -
+secretProviderClass:
+  # -- (bool) create or not the secret provider class manifest
+  create: true
+
+# -- Azure KeyVault connection configuration
+# @default -- -
+keyvault:
+  # -- KV name
+  name: ""
+  # -- Tenant id (uuid)
+  tenantId: ""
+
+# -- List of certificate names as present into KV azure
+# @default -- []
+kvCertificatesName: []
+
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""

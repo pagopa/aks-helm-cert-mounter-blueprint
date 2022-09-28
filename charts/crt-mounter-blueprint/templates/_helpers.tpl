@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "microservice-chart.name" -}}
+{{- define "crt-mounter-blueprint.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "microservice-chart.fullname" -}}
+{{- define "crt-mounter-blueprint.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -29,23 +29,23 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "microservice-chart.fullnameCanaryDelivery" -}}
-beta-{{ include "microservice-chart.fullname" . }}
+{{- define "crt-mounter-blueprint.fullnameCanaryDelivery" -}}
+beta-{{ include "crt-mounter-blueprint.fullname" . }}
 {{- end }}
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "microservice-chart.chart" -}}
+{{- define "crt-mounter-blueprint.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "microservice-chart.labels" -}}
-helm.sh/chart: {{ include "microservice-chart.chart" . }}
-{{ include "microservice-chart.selectorLabels" . }}
+{{- define "crt-mounter-blueprint.labels" -}}
+helm.sh/chart: {{ include "crt-mounter-blueprint.chart" . }}
+{{ include "crt-mounter-blueprint.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -55,9 +55,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Progressive Delivery Common labels
 */}}
-{{- define "microservice-chart.labelsCanaryDelivery" -}}
-helm.sh/chart: {{ include "microservice-chart.chart" . }}
-{{ include "microservice-chart.selectorLabelsCanaryDelivery" . }}
+{{- define "crt-mounter-blueprint.labelsCanaryDelivery" -}}
+helm.sh/chart: {{ include "crt-mounter-blueprint.chart" . }}
+{{ include "crt-mounter-blueprint.selectorLabelsCanaryDelivery" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -67,8 +67,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "microservice-chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "microservice-chart.name" . }}
+{{- define "crt-mounter-blueprint.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "crt-mounter-blueprint.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 canaryDelivery: "false"
 {{- end }}
@@ -76,8 +76,8 @@ canaryDelivery: "false"
 {{/*
 Progressive Delivery Selector labels
 */}}
-{{- define "microservice-chart.selectorLabelsCanaryDelivery" -}}
-app.kubernetes.io/name: {{ include "microservice-chart.name" . }}
+{{- define "crt-mounter-blueprint.selectorLabelsCanaryDelivery" -}}
+app.kubernetes.io/name: {{ include "crt-mounter-blueprint.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 canaryDelivery: "true"
 {{- end }}
@@ -85,9 +85,9 @@ canaryDelivery: "true"
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "microservice-chart.serviceAccountName" -}}
+{{- define "crt-mounter-blueprint.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "microservice-chart.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "crt-mounter-blueprint.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

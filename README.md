@@ -1,6 +1,6 @@
-# K8s Microservice Template &middot; [![GitHub Release](https://img.shields.io/github/v/release/pagopa/aks-microservice-chart-blueprint?style=flat)](https://github.com/pagopa/aks-microservice-chart-blueprint/releases) [![GitHub Issues](https://img.shields.io/github/issues/pagopa/aks-microservice-chart-blueprint?style=flat)](https://github.com/pagopa/aks-microservice-chart-blueprint/issues) [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+# K8s Microservice Template &middot; [![GitHub Release](https://img.shields.io/github/v/release/pagopa/aks-helm-cert-mounter-blueprint?style=flat)](https://github.com/pagopa/aks-helm-cert-mounter-blueprint/releases) [![GitHub Issues](https://img.shields.io/github/issues/pagopa/aks-helm-cert-mounter-blueprint?style=flat)](https://github.com/pagopa/aks-helm-cert-mounter-blueprint/issues) [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 
-The `aks-microservice-chart-blueprint` chart is the best way to release your
+The `aks-helm-cert-mounter-blueprint` chart is the best way to release your
 microservice into PagoPA K8s environment. It contains all the required
 components to get started, and it has several architectural aspects already
 configured.
@@ -42,7 +42,7 @@ mkdir helm && cd helm
 Add Helm repo:
 
 ```shell
-helm repo add pagopa-microservice https://pagopa.github.io/aks-microservice-chart-blueprint
+helm repo add cert-mounter-blueprint https://pagopa.github.io/aks-helm-cert-mounter-blueprint
 ```
 
 > If you had already added this repo earlier, run `helm repo update` to retrieve
@@ -59,9 +59,9 @@ type: application
 version: 1.0.0
 appVersion: 1.0.0
 dependencies:
-- name: microservice-chart
+- name: crt-mounter-blueprint
   version: 1.19.0
-  repository: "https://pagopa.github.io/aks-microservice-chart-blueprint"
+  repository: "https://pagopa.github.io/aks-helm-cert-mounter-blueprint"
 EOF
 ```
 
@@ -156,7 +156,7 @@ look at this [GitHub Action](.github/workflows/check_helm.yml).
 
 ## Yaml chart configuration properties (values.yaml)
 
-see [README/Microservice Chart configuration](charts/microservice-chart/README.md) to understand how to use the values.
+see [README/Microservice Chart configuration](charts/crt-mounter-blueprint/README.md) to understand how to use the values.
 
 ### Yaml: how to load values from externals config maps and use as ENV variable
 
@@ -186,8 +186,8 @@ For more information, visit the [complete documentation](https://pagopa.atlassia
 Clone the repository and run the setup script:
 
 ```shell
-git clone git@github.com:pagopa/aks-microservice-chart-blueprint.git
-cd aks-microservice-chart-blueprint.git
+git clone git@github.com:pagopa/aks-helm-cert-mounter-blueprint.git
+cd aks-helm-cert-mounter-blueprint.git
 sh /bin/setup
 ```
 

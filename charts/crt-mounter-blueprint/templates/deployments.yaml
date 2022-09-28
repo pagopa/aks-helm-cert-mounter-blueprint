@@ -1,0 +1,70 @@
+{{- $fullName  := include "crt-mounter-blueprint.fullname" .  -}}
+{{- if .Values.deployment.create -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "crt-mounter-blueprint.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "crt-mounter-blueprint.labels" . | nindent 4 }}
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "crt-mounter-blueprint.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        aadpodidbinding: "{{ .Values.namespace }}-pod-identity"
+        {{- include "crt-mounter-blueprint.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: {{ include "crt-mounter-blueprint.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: crt-mounter
+          securityContext:
+            allowPrivilegeEscalation: false
+          image: alpine:3.16.1@sha256:9b2a28eb47540823042a2ba401386845089bb7b62a9637d55816132c4c3c36eb
+          command: ['tail', '-f', '/dev/null']
+          resources:
+            limits:
+              memory: 16Mi
+              cpu: 50m
+          volumeMounts:
+            {{- range $kvCert := .Values.kvCertificatesName }}
+            - name: secrets-store-inline-crt-{{ $kvCert }}
+              mountPath: "/mnt/secrets-store-crt-{{ $kvCert }}"
+              readOnly: true
+            {{- end }}
+      volumes:
+
+        ### TLS cert
+        {{- range $kvCert := .Values.kvCertificatesName }}
+        - name: secrets-store-inline-crt-{{ $kvCert }}
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ $fullName }}-{{ $kvCert }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

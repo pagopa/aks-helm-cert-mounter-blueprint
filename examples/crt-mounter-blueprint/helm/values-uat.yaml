@@ -1,4 +1,4 @@
-microservice-chart:
+crt-mounter-blueprint:
   namespace: "idpay"
   nameOverride: ""
   fullnameOverride: ""
