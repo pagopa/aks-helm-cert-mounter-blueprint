@@ -3,6 +3,16 @@ entries:
   cert-mounter-blueprint:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2022-10-18T08:54:28.103542334Z"
+    description: A Helm chart that allow certificate mounter for ingress in PagoPA
+    digest: 06e48a0152398d6abdf5c75a721e0f8739b13b230d6e9ef56fc2dce792e40cce
+    name: cert-mounter-blueprint
+    type: application
+    urls:
+    - https://github.com/pagopa/aks-helm-cert-mounter-blueprint/releases/download/cert-mounter-blueprint-1.0.1/cert-mounter-blueprint-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2022-09-28T20:30:00.919777421Z"
     description: A Helm chart for PagoPA cert mounter for ingress
     digest: 977bc5b4a337f636cd73876386f4027e78a5b7857e972b06cd84e668947166c1
@@ -242,4 +252,4 @@ entries:
     urls:
     - https://github.com/pagopa/template-microservizio-k8s/releases/download/microservice-chart-1.8.1/microservice-chart-1.8.1.tgz
     version: 1.8.1
-generated: "2022-09-28T20:30:00.919975021Z"
+generated: "2022-10-18T08:54:28.103733534Z"
