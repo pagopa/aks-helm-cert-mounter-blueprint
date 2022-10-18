@@ -60,18 +60,6 @@ tolerations: []
 affinity: {}
 
 #
-# Network
-#
-service:
-  # -- (bool) create the service manifest
-  create: true
-  # -- Which type of service to use
-  type: ClusterIP
-  # -- (int) Which port use (! this port is used even inside the deployment)
-  port: 80
-
-
-#
 # Pod identity and KV connection
 #
 
