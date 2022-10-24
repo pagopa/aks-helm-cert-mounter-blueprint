@@ -21,4 +21,4 @@ entries:
     urls:
     - https://github.com/pagopa/aks-helm-cert-mounter-blueprint/releases/download/cert-mounter-blueprint-1.0.0/cert-mounter-blueprint-1.0.0.tgz
     version: 1.0.0
-  generated: "2022-10-18T08:54:28.103733534Z"
+generated: "2022-10-18T08:54:28.103733534Z"
