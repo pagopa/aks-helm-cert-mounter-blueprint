@@ -40,7 +40,7 @@ spec:
               cpu: 50m
           volumeMounts:
             {{- range $kvCert := .Values.kvCertificatesName }}
-            - name: secrets-store-inline-crt-{{ $kvCert }}
+            - name: secrets-crt-{{ $kvCert }}
               mountPath: "/mnt/secrets-store-crt-{{ $kvCert }}"
               readOnly: true
             {{- end }}
@@ -48,7 +48,7 @@ spec:
 
         ### TLS cert
         {{- range $kvCert := .Values.kvCertificatesName }}
-        - name: secrets-store-inline-crt-{{ $kvCert }}
+        - name: secrets-crt-{{ $kvCert }}
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
