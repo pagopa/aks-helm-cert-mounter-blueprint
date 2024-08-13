@@ -92,3 +92,15 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Extra labels
+*/}}
+{{- define "cert-mounter-blueprint.extraLabels" -}}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ (.Values.image.tag | default .Chart.AppVersion) | replace "@sha256:" "_" | trunc 63 | quote }}
+{{- end }}
+{{- if .Values.azure.workloadIdentityEnabled }}
+azure.workload.identity/use: "{{ .Values.azure.workloadIdentityEnabled }}"
+{{- end }}
+{{- end }}
