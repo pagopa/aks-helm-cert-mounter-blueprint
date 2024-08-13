@@ -1,0 +1,16 @@
+cert-mounter-blueprint:
+  namespace: "testit"
+
+  deployment:
+    create: true
+
+  kvCertificatesName:
+    - mock-itn-internal-devopslab-pagopa-it
+    - testit-itn-internal-devopslab-pagopa-it
+
+  serviceAccount:
+    name: testit-workload-identity
+
+  keyvault:
+    name: dvopla-d-itn-testit-kv
+    tenantId: "7788edaf-0346-4068-9d79-c868aed15b3d"
