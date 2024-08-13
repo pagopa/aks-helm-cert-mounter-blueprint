@@ -6,5 +6,5 @@ version: 1.0.0
 appVersion: 1.0.0
 dependencies:
 - name: cert-mounter-blueprint
-  version: 1.0.0
+  version: 1.0.4
   repository: file://../../../charts/cert-mounter-blueprint
