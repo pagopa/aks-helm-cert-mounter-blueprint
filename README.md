@@ -56,7 +56,7 @@ version: 1.0.0
 appVersion: 1.0.0
 dependencies:
 - name: cert-mounter-blueprint
-  version: 1.0.0
+  version: 2.0.0
   repository: "https://pagopa.github.io/aks-helm-cert-mounter-blueprint"
 EOF
 ```
@@ -77,29 +77,46 @@ touch values-dev.yaml values-uat.yaml values-prod.yaml
 
 ```yaml
 cert-mounter-blueprint:
-  namespace: "rtd"
-  nameOverride: ""
-  fullnameOverride: ""
+  namespace: "testit"
 
   deployment:
     create: true
 
   kvCertificatesName:
-    - mock-certificate
-    - fake-cert
-    - dev01-rtd-internal-dev-cstar-pagopa-it
+    - mock-itn-internal-devopslab-pagopa-it
+    - testit-itn-internal-devopslab-pagopa-it
+
+  serviceAccount:
+    name: testit-workload-identity
 
   keyvault:
-    name: "cstar-d-rtd-kv"
+    name: dvopla-d-itn-testit-kv
     tenantId: "7788edaf-0346-4068-9d79-c868aed15b3d"
 ```
 
-- execute helm upgrade to install the chart: 
+### (Continue) Helm exec with Workload Identity ClientID (ex Pod Identity)
+
+to be able to use the workload identity is mandatory to setup the client id associated to this one. To do so, you will have to pass as a parameter (DON'T COMMIT AS VALUE) as shown below, into the helm script
+
+```yaml
+microservice-chart:
+  azure:
+    # -- (bool) Enable workload identity
+    workloadIdentityEnabled: true
+    # -- Azure Workload Identity Client ID (e.g. qwerty123-a1aa-1234-xyza-qwerty123)
+    workloadIdentityClientId: ""
+```
+
+```yaml
+--set microservice-chart.azure.workloadIdentityClientId="$CLIENT_ID"
+```
+
+- execute helm upgrade to install the chart:
 
 ```sh
-helm upgrade -i -n <namespace name> -f <file with values> <name of the helm chart> <chart folder>
+helm upgrade -i -n <namespace name> -f <file with values> <name of the helm chart> <chart folder> --set microservice-chart.azure.workloadIdentityClientId="$CLIENT_ID"
 
-helm upgrade -i -n mynamespace -f helm/values-dev.yaml cert-mounter helm
+helm upgrade -i -n mynamespace -f helm/values-dev.yaml cert-mounter helm --set microservice-chart.azure.workloadIdentityClientId="$CLIENT_ID"
 ```
 
 ### Upgrading
@@ -117,7 +134,7 @@ To work as expect this template must request:
 Azure:
 
 - TLS certificate are present into the kv (for ingress)
-- Managed POD identity are created
+- Workload Identity identity are created
 
 ## Final Result
 
@@ -125,7 +142,7 @@ Here you can find a result of the template [final result](docs/FINAL_RESULT_EXAM
 
 ## Examples
 
-In the [`example`](example/) folder, you can find a working examples.
+In the [`test`](test/) folder, you can find a working examples.
 
 ### cert-mounter-example
 
