@@ -95,7 +95,6 @@ keyvault:
 # @default -- []
 kvCertificatesName: []
 
-
 # -- Service account configuration
 # @default -- -
 serviceAccount:
