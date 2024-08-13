@@ -28,22 +28,26 @@ fi
 #
 # VALUES
 #
-NAMESPACE=$(yq eval '.microservice-chart.namespace' "$VALUES_FILE_NAME")
+NAMESPACE=$(yq eval '.cert-mounter-blueprint.namespace' "$VALUES_FILE_NAME")
 
 if [ -z "$NAMESPACE" ]; then
     echo "Errore: Impossible to read the namespace"
     exit 1
 fi
 
+echo "✅ Namespace loaded: $NAMESPACE"
+
 #
 # 🔒 KV
 #
-KEYVAULT_NAME=$(yq eval '.microservice-chart.keyvault.name' "$VALUES_FILE_NAME")
+KEYVAULT_NAME=$(yq eval '.cert-mounter-blueprint.keyvault.name' "$VALUES_FILE_NAME")
 
 if [ -z "$KEYVAULT_NAME" ]; then
     echo "Errore: Impossibile leggere il nome del Key Vault dal file YAML"
     exit 1
 fi
+
+echo "✅ Keyvault name loaded: $KEYVAULT_NAME"
 
 CLIENT_ID=$(az keyvault secret show --name "$SECRET_NAME" --vault-name "$KEYVAULT_NAME" --query "value" -o tsv)
 
@@ -52,6 +56,8 @@ if [ -z "$CLIENT_ID" ]; then
     echo "Errore: Impossible to read the secret value"
     exit 1
 fi
+
+echo "✅ ClienID Loaded"
 
 #
 # K8s
@@ -78,14 +84,14 @@ rm -rf charts || handle_error "Unable to delete charts folder"
 echo "🔨 Starting Helm Template"
 helm dep build && \
 helm template . -f "$VALUES_FILE_NAME" \
-  --set microservice-chart.azure.workloadIdentityClientId="$CLIENT_ID" \
+  --set cert-mounter-blueprint.azure.workloadIdentityClientId="$CLIENT_ID" \
   --debug
 
 echo "🚀 Launch helm deploy"
 # Execute helm upgrade/install command and capture output and exit code
 helm upgrade --namespace "$NAMESPACE" \
     --install \
-    --set microservice-chart.azure.workloadIdentityClientId="$CLIENT_ID" \
+    --set cert-mounter-blueprint.azure.workloadIdentityClientId="$CLIENT_ID" \
     --values "$VALUES_FILE_NAME" \
     --wait --debug --timeout 3m0s "$APP_NAME" .
 
