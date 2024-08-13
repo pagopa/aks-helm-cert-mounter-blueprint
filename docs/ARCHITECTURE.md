@@ -10,7 +10,7 @@
 
 The deployment contains one pod:
 
-1. **alpine/crt-mounter**: util pod used to load the tls certificate for ingress from kv. This was mandatory because we need a way to load the tls cerficate
+1. **busy box/crt-mounter**: mock pod used to load the tls certificate for ingress from kv. This was mandatory because we need a way to load the tls cerficate
 
 #### kvCertificatesName
 
@@ -24,7 +24,7 @@ The secret provider class allows to define:
 * which kind of secret or certificate to load
 * setup azure information to contact the key vault
 
-All the operations are done via the Managed Pod Identity that allows the connection
+All the operations are done via the WorkloadIdentity Identity that allows the connection
 
 ### Documentation
 
