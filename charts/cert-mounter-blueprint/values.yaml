@@ -19,6 +19,16 @@ deployment:
   # -- (int) Number of replicas for this deployment
   replicas: 1
 
+# -- image: configuration for the container
+# @default -- {}
+image:
+  # -- Docker reposity for the container
+  repository: "busybox"
+  # -- Container TAG
+  tag: "1.36.1"
+  # -- Pull policy to use
+  pullPolicy: Always
+
 # -- Configure values from config maps external to chart. E.g already present into cluster, see documentation
 # @default -- {}
 envConfigMapExternals: {}
@@ -28,12 +38,16 @@ envConfigMapExternals: {}
 resources:
   # -- request is mandatory
   requests:
-    memory: "96Mi"
-    cpu: "40m"
+    # -- memory
+    memory: "10Mi"
+    # -- cpu
+    cpu: "10m"
   # -- limits is mandatory
   limits:
-    memory: "128Mi"
-    cpu: "150m"
+    # -- memory
+    memory: "10Mi"
+    # -- cpu
+    cpu: "10m"
 
 # -- Environment config to use for the canary container
 envConfig: {}
@@ -81,8 +95,19 @@ keyvault:
 # @default -- []
 kvCertificatesName: []
 
-
+# -- Service account configuration
+# @default -- -
 serviceAccount:
+  # -- (bool) Create the service account object. If true use this object, otherwise use only the name reference
   create: false
-  annotations: {}
+  # -- Service account name, this service account already exists
   name: ""
+  annotations: {}
+  # -- (bool)
+  automount: false
+
+azure:
+  # -- (bool) Enable workload identity
+  workloadIdentityEnabled: true
+  # -- Azure Workload Identity Client ID (e.g. qwerty123-a1aa-1234-xyza-qwerty123)
+  workloadIdentityClientId: ""

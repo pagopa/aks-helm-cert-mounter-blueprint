@@ -1,10 +1,10 @@
 apiVersion: v2
-name: cert-mounter-example
-description: An example application with Java spring boot
+name: cert-mounter-basic
+description: Cert mounter basic test
 type: application
-version: 1.0.0
-appVersion: 1.0.0
+version: 2.0.0
+appVersion: 2.0.0
 dependencies:
 - name: cert-mounter-blueprint
-  version: 1.0.0
+  version: 1.0.4
   repository: file://../../../charts/cert-mounter-blueprint

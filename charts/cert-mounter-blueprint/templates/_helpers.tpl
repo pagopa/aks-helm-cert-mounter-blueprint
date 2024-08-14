@@ -37,7 +37,7 @@ beta-{{ include "cert-mounter-blueprint.fullname" . }}
 Create chart name and version as used by the chart label.
 */}}
 {{- define "cert-mounter-blueprint.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Chart.Name (.Values.image.tag | default .Chart.Version) | replace "@sha256:" "_" | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -90,5 +90,17 @@ Create the name of the service account to use
 {{- default (include "cert-mounter-blueprint.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Extra labels
+*/}}
+{{- define "cert-mounter-blueprint.extraLabels" -}}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ (.Values.image.tag | default .Chart.AppVersion) | replace "@sha256:" "_" | trunc 63 | quote }}
+{{- end }}
+{{- if .Values.azure.workloadIdentityEnabled }}
+azure.workload.identity/use: "{{ .Values.azure.workloadIdentityEnabled }}"
 {{- end }}
 {{- end }}

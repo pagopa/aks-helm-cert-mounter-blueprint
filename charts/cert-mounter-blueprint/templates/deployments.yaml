@@ -21,8 +21,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        aadpodidbinding: "{{ .Values.namespace }}-pod-identity"
+        redeploy: {{ now | unixEpoch | quote }}
         {{- include "cert-mounter-blueprint.selectorLabels" . | nindent 8 }}
+        {{- include "cert-mounter-blueprint.extraLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: {{ include "cert-mounter-blueprint.serviceAccountName" . }}
@@ -32,20 +33,27 @@ spec:
         - name: crt-mounter
           securityContext:
             allowPrivilegeEscalation: false
-          image: alpine:3.16.1@sha256:9b2a28eb47540823042a2ba401386845089bb7b62a9637d55816132c4c3c36eb
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ['tail', '-f', '/dev/null']
           resources:
-            limits:
-              memory: 16Mi
-              cpu: 50m
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- range $kvCert := .Values.kvCertificatesName }}
             - name: secrets-crt-{{ $kvCert }}
               mountPath: "/mnt/secrets-store-crt-{{ $kvCert }}"
               readOnly: true
             {{- end }}
+          # allow to wait until all the secrets are loaded and not exit before is done
+          startupProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - "exit 0"
+            initialDelaySeconds: 10
+            failureThreshold: 3
+            periodSeconds: 10
       volumes:
-
         ### TLS cert
         {{- range $kvCert := .Values.kvCertificatesName }}
         - name: secrets-crt-{{ $kvCert }}

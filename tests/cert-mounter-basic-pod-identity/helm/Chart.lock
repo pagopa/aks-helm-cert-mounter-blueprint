@@ -1,0 +1,6 @@
+dependencies:
+- name: cert-mounter-blueprint
+  repository: https://pagopa.github.io/aks-helm-cert-mounter-blueprint
+  version: 1.0.4
+digest: sha256:84b497281999cfc86bb79e46b882b1e21405a03d17a91a51f64f244a9ccabba4
+generated: "2024-08-14T16:03:45.061007+02:00"
