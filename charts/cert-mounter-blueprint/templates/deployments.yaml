@@ -21,6 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        redeploy: {{ now | unixEpoch | quote }}
         {{- include "cert-mounter-blueprint.selectorLabels" . | nindent 8 }}
         {{- include "cert-mounter-blueprint.extraLabels" . | nindent 8 }}
     spec:
@@ -42,8 +43,17 @@ spec:
               mountPath: "/mnt/secrets-store-crt-{{ $kvCert }}"
               readOnly: true
             {{- end }}
+          # allow to wait until all the secrets are loaded and not exit before is done
+          startupProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - "exit 0"
+            initialDelaySeconds: 10
+            failureThreshold: 3
+            periodSeconds: 10
       volumes:
-
         ### TLS cert
         {{- range $kvCert := .Values.kvCertificatesName }}
         - name: secrets-crt-{{ $kvCert }}
