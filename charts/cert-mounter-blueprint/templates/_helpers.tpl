@@ -37,7 +37,7 @@ beta-{{ include "cert-mounter-blueprint.fullname" . }}
 Create chart name and version as used by the chart label.
 */}}
 {{- define "cert-mounter-blueprint.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Chart.Name (.Values.image.tag | default .Chart.Version) | replace "@sha256:" "_" | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
