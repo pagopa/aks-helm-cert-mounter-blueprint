@@ -144,9 +144,22 @@ Here you can find a result of the template [final result](docs/FINAL_RESULT_EXAM
 
 In the [`test`](test/) folder, you can find a working examples.
 
-### cert-mounter-example
+### cert-mounter-basic
 
-install a cert mounter
+Allow to create a cert mount and load 2 certificates
+
+### cert-mounter-basic-pod-identity
+
+cert mounter with pod identity
+
+### Test migration from podIdenty to WorkloadIdenty
+
+Install in this order:
+
+1. `cert-mounter-basic-pod-identity`
+2. `cert-mounter-basic`
+
+assertion: no changes into the secrets, and everithing works as expected
 
 ## Yaml chart configuration properties (values.yaml)
 
