@@ -41,13 +41,13 @@ resources:
     # -- memory
     memory: "10Mi"
     # -- cpu
-    cpu: "10m"
+    cpu: "30m"
   # -- limits is mandatory
   limits:
     # -- memory
     memory: "10Mi"
     # -- cpu
-    cpu: "10m"
+    cpu: "30m"
 
 # -- Environment config to use for the canary container
 envConfig: {}
