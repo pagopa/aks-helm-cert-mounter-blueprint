@@ -1,6 +1,6 @@
 # cert-mounter-blueprint
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
 
 A Helm chart that allow certificate mounter for ingress in PagoPA
 
@@ -32,11 +32,11 @@ A Helm chart that allow certificate mounter for ingress in PagoPA
 | podAnnotations | object | `{}` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | resources | object | - | POD resources section |
-| resources.limits | object | `{"cpu":"10m","memory":"10Mi"}` | limits is mandatory |
-| resources.limits.cpu | string | `"10m"` | cpu |
+| resources.limits | object | `{"cpu":"30m","memory":"10Mi"}` | limits is mandatory |
+| resources.limits.cpu | string | `"30m"` | cpu |
 | resources.limits.memory | string | `"10Mi"` | memory |
-| resources.requests | object | `{"cpu":"10m","memory":"10Mi"}` | request is mandatory |
-| resources.requests.cpu | string | `"10m"` | cpu |
+| resources.requests | object | `{"cpu":"30m","memory":"10Mi"}` | request is mandatory |
+| resources.requests.cpu | string | `"30m"` | cpu |
 | resources.requests.memory | string | `"10Mi"` | memory |
 | secretProviderClass | object | - | Secrect provider class allow to connect to azure kv |
 | secretProviderClass.create | bool | `true` | create or not the secret provider class manifest |
