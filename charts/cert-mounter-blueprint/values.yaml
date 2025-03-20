@@ -25,7 +25,7 @@ image:
   # -- Docker reposity for the container
   repository: "busybox"
   # -- Container TAG
-  tag: "1.36.1"
+  tag: "1.36.1@sha256:e246aa22ad2cbdfbd19e2a6ca2b275e26245a21920e2b2d0666324cee3f15549"
   # -- Pull policy to use
   pullPolicy: Always
 
