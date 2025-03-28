@@ -3,6 +3,16 @@ entries:
   cert-mounter-blueprint:
   - apiVersion: v2
     appVersion: 0.0.0
+    created: "2025-03-28T16:09:34.73888243Z"
+    description: A Helm chart that allow certificate mounter for ingress in PagoPA
+    digest: 55026fc1e7bf1a15a8de9bd3f57835fbabbf81588d4b0367aeddf6213f2b609a
+    name: cert-mounter-blueprint
+    type: application
+    urls:
+    - https://github.com/pagopa/aks-helm-cert-mounter-blueprint/releases/download/cert-mounter-blueprint-2.0.2/cert-mounter-blueprint-2.0.2.tgz
+    version: 2.0.2
+  - apiVersion: v2
+    appVersion: 0.0.0
     created: "2024-10-28T08:53:09.850868876Z"
     description: A Helm chart that allow certificate mounter for ingress in PagoPA
     digest: 9b6d8cb20ff1719f61abb31b35fe995c99208c37415598f1698a6ac2271ce138
@@ -61,4 +71,4 @@ entries:
     urls:
     - https://github.com/pagopa/aks-helm-cert-mounter-blueprint/releases/download/cert-mounter-blueprint-1.0.0/cert-mounter-blueprint-1.0.0.tgz
     version: 1.0.0
-generated: "2024-10-28T08:53:09.850883092Z"
+generated: "2025-03-28T16:09:34.738915351Z"
