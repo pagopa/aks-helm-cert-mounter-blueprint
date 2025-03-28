@@ -22,13 +22,14 @@ deployment:
 # -- image: configuration for the container
 # @default -- {}
 image:
-  # -- Docker reposity for the container
-  repository: "busybox"
+  # -- Amazon ECR reposity for the container
+  repository: "public.ecr.aws/docker/library/busybox"
   # -- Container TAG
   tag: "1.36.1"
+  # -- Container Digest sha256
+  digest: "sha256:e246aa22ad2cbdfbd19e2a6ca2b275e26245a21920e2b2d0666324cee3f15549"
   # -- Pull policy to use
   pullPolicy: Always
-
 # -- Configure values from config maps external to chart. E.g already present into cluster, see documentation
 # @default -- {}
 envConfigMapExternals: {}

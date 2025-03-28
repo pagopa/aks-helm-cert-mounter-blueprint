@@ -1,6 +1,6 @@
 # cert-mounter-blueprint
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
+![Version: 2.0.1](https://img.shields.io/badge/Version-2.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
 
 A Helm chart that allow certificate mounter for ingress in PagoPA
 
@@ -19,8 +19,9 @@ A Helm chart that allow certificate mounter for ingress in PagoPA
 | envSecret | object | `{}` | Environment secrets to use for the canary container |
 | fullnameOverride | string | `""` | Helm chart fullname override |
 | image | object | {} | image: configuration for the container |
+| image.digest | string | `"sha256:e246aa22ad2cbdfbd19e2a6ca2b275e26245a21920e2b2d0666324cee3f15549"` | Container Digest sha256 |
 | image.pullPolicy | string | `"Always"` | Pull policy to use |
-| image.repository | string | `"busybox"` | Docker reposity for the container |
+| image.repository | string | `"public.ecr.aws/docker/library/busybox"` | Amazon ECR reposity for the container |
 | image.tag | string | `"1.36.1"` | Container TAG |
 | keyvault | object | - | Azure KeyVault connection configuration |
 | keyvault.name | string | `""` | KV name |
@@ -32,12 +33,12 @@ A Helm chart that allow certificate mounter for ingress in PagoPA
 | podAnnotations | object | `{}` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | resources | object | - | POD resources section |
-| resources.limits | object | `{"cpu":"30m","memory":"10Mi"}` | limits is mandatory |
-| resources.limits.cpu | string | `"30m"` | cpu |
-| resources.limits.memory | string | `"10Mi"` | memory |
-| resources.requests | object | `{"cpu":"30m","memory":"10Mi"}` | request is mandatory |
-| resources.requests.cpu | string | `"30m"` | cpu |
-| resources.requests.memory | string | `"10Mi"` | memory |
+| resources.limits | object | `{"cpu":"10m","memory":"30Mi"}` | limits is mandatory |
+| resources.limits.cpu | string | `"10m"` | cpu |
+| resources.limits.memory | string | `"30Mi"` | memory |
+| resources.requests | object | `{"cpu":"10m","memory":"30Mi"}` | request is mandatory |
+| resources.requests.cpu | string | `"10m"` | cpu |
+| resources.requests.memory | string | `"30Mi"` | memory |
 | secretProviderClass | object | - | Secrect provider class allow to connect to azure kv |
 | secretProviderClass.create | bool | `true` | create or not the secret provider class manifest |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
