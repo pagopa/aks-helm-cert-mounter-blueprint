@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2
         with:
           fetch-depth: 0
           token: ${{ secrets.RELEASE_TOKEN }}
@@ -63,6 +63,6 @@ jobs:
 
       - name: Run chart-releaser
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: helm/chart-releaser-action@v1.4.0
+        uses: helm/chart-releaser-action@a3454e46a6f5ac4811069a381e646961dda2e1bf # v1.4.0
         env:
           CR_TOKEN: "${{ secrets.RELEASE_TOKEN }}"
